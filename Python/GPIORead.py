@@ -17,10 +17,10 @@ https://navinbhaskar.wordpress.com/2015/03/20/python-on-intel-galileoedison-part
 GPIO_In = 4                   # we are using D4 pin
 Input_GPIO = mraa.Gpio(GPIO_In) # Get the Input pin object
 Input_GPIO.dir(mraa.DIR_IN)      # Set the direction as Input
-Input_GPIO.write(0)				# Set D4 = 0
+
 # One infinite loop coming up
 while True:
-    if Input_GPIO == 0:
+    if Input_GPIO.read() == 0:
         #Sensor is engaged
         print 'engaged! You may continue.'
     else:
