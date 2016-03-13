@@ -6,6 +6,8 @@ import BaseHTTPServer
 from BaseHTTPServer import BaseHTTPRequestHandler
 import cgi
 
+from scapy.all import srp,Ether,ARP,conf
+
 RECPT_TYPE_SMS = 1
 RECPT_TYPE_EMAIL = 2
 
@@ -203,13 +205,16 @@ class RequestHandler(BaseHTTPRequestHandler):
 			postvars = {}
 #		carrierAddr = [ service['address'] for service in self.services if service['name'] == postvars['carrier'] ]
 		carrierAddr = self.services[int(postvars['carrier'][0])]['address']
+		ipAddr = self.client_address[0]
+		# use scapy to arp scan for the mac address of the desired ip
+		macAddr = srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst = ipAddr), timeout = 2, inter = 0.1)
 		registerDevice(carrierAddr, postvars['deliveryPref'][0], postvars['emailaddr'][0], postvars['emailpasswd'][0], postvars['phoneNumber'][0], macAddr)
 		self.send_response(200)
 		self.send_header("Content-Type", "text/html")
 		self.send_header("Content-Length", len(self.confirmPage))
 		self.end_headers()
 		self.wfile.write(self.confirmPage)
-		print 'post from ' + self.client_Address[0]
+		print 'post from ' + 
 
 server = BaseHTTPServer.HTTPServer(("", 3000), RequestHandler)
 server.serve_forever()
