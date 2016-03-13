@@ -25,7 +25,7 @@ class Device():
 		self.emailPasswd  = emailPasswd
 		self.phoneNumber  = phoneNumber
 		self.macAddr      = macAddr
-	def notifyDevice:
+	def notifyDevice():
 		subject = ''
 		body = ''
 		if self.recptType == 'sms':
