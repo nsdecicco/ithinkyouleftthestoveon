@@ -16,18 +16,15 @@ https://navinbhaskar.wordpress.com/2015/03/20/python-on-intel-galileoedison-part
 """
 LED_GPIO = 4                   # we are using D5 pin
 blinkLed = mraa.Gpio(LED_GPIO) # Get the LED pin object
-blinkLed.dir(mraa.DIR_OUT)     # Set the direction as output
-ledState = False               # LED is off to begin with
-blinkLed.write(0)
+blinkLed.dir(mraa.DIR_IN)      # Set the direction as output
+
 # One infinite loop coming up
 while True:
-    if ledState == False:
-        # LED is off, turn it on
-        blinkLed.write(1)
-        ledState = True        # LED is on
+    if blinkLed == 0:
+        #Sensor is engaged
+        print 'engaged'
     else:
-        blinkLed.write(0)
-        ledState = False
-    print "LED is on? \nAns: %s" %(ledState)
-    # Wait for some time 
+		#Sensor is not engaged
+        print 'YOU LEFT THE STOVE ON'
+         
     time.sleep(1)
