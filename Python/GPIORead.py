@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import mraa     # For accessing the GPIO
-import time     # For sleeping between blinks
+import time     # For sleeping between reading the Input
 """
 This script demonstrates the usage of mraa library for controlling a 
 GPIO as output
@@ -14,17 +14,17 @@ You can exit this demo by hitting ctrl+c
 Link for this tutorial:
 https://navinbhaskar.wordpress.com/2015/03/20/python-on-intel-galileoedison-part-1/
 """
-LED_GPIO = 4                   # we are using D5 pin
-blinkLed = mraa.Gpio(LED_GPIO) # Get the LED pin object
-blinkLed.dir(mraa.DIR_IN)      # Set the direction as output
-
+GPIO_In = 4                   # we are using D4 pin
+Input_GPIO = mraa.Gpio(GPIO_In) # Get the Input pin object
+Input_GPIO.dir(mraa.DIR_IN)      # Set the direction as Input
+Input_GPIO.write(0)				# Set D4 = 0
 # One infinite loop coming up
 while True:
-    if blinkLed == 0:
+    if Input_GPIO == 0:
         #Sensor is engaged
-        print 'engaged'
+        print 'engaged! You may continue.'
     else:
 		#Sensor is not engaged
-        print 'YOU LEFT THE STOVE ON'
+        print 'YOU LEFT THE STOVE ON!!!'
          
     time.sleep(1)
